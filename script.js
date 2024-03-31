@@ -28,9 +28,17 @@ function receberQuantidadePessoas (evento) {
 const botoesGorjeta = document.querySelectorAll(".gorjeta input[type='button']")
 console.log(botoesGorjeta)
     botoesGorjeta.forEach(botao =>{
-        botao.addEventListener("click", receberPorcentagem)
+        botao.addEventListener("click", receberPorcentagemBotao)
 })
 
-function receberPorcentagem() {
-        console.log("chamou")
+function receberPorcentagemBotao(evento) {
+    botoesGorjeta.forEach(botao => {
+        botao.classList.remove("botao-ativo")
+
+        if(botao.value === evento.target.value) {
+            botao.classList.add("botao-ativo")
+        }
+    })
+
+    porcetagem = parseFloat(evento.target.value) / 100
 }
