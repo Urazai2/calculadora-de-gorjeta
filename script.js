@@ -1,11 +1,13 @@
 let conta = 0
 let pessoas = 0
+let porcetagem = 0
 
 const contaInput = document.querySelector("#conta")
 contaInput.addEventListener("input", receberValorConta)
 
 function receberValorConta(evento) {
     conta = Number(evento.target.value)
+    calcular()
 }
 
 const pessoasInput = document.querySelector("#pessoas")
@@ -23,15 +25,17 @@ function receberQuantidadePessoas (evento) {
         divErro.setAttribute("id", "")
         pessoas = Number(evento.target.value)
     }
+
+    calcular()
 }
 
 const botoesGorjeta = document.querySelectorAll(".gorjeta input[type='button']")
 console.log(botoesGorjeta)
     botoesGorjeta.forEach(botao =>{
-        botao.addEventListener("click", receberPorcentagemBotao)
+        botao.addEventListener("click", receberPorcentagem)
 })
 
-function receberPorcentagemBotao(evento) {
+function receberPorcentagem(evento) {
     botoesGorjeta.forEach(botao => {
         botao.classList.remove("botao-ativo")
 
@@ -45,8 +49,37 @@ function receberPorcentagemBotao(evento) {
     } else {
         porcetagem = 0
     }
-    console.log(porcetagem)
+
+    calcular()
 }
 
 const gorjetaInput = document.querySelector("#outra")
-gorjetaInput.addEventListener("input", receberPorcentagemBotao)
+gorjetaInput.addEventListener("input", receberPorcentagem)
+
+function calcular() {
+    if (conta !== 0 && porcetagem !== 0 && pessoas !== 0) {
+        const strongGorjetaTotal = document.querySelector(".gorjeta-total > strong")
+        strongGorjetaTotal.innerHTML = `R$ ${(conta * porcetagem / pessoas).toFixed(2)}`
+
+        const strongTotal = document.querySelector(".total > strong")
+        strongTotal.innerHTML = `R$ ${((conta + (conta * porcetagem)) / pessoas).toFixed(2)}`
+    }
+}
+
+const botaoLimpar = document.querySelector(".resultados button")
+botaoLimpar.addEventListener("click", Limpar)
+
+function Limpar() {
+    contaInput.value = ""
+
+    botoesGorjeta.forEach(botao => {
+        botao.classList.remove("botao-ativo")
+    })
+
+    gorjetaInput.value = ""
+
+    pessoasInput.value = ""
+
+    document.querySelector(".gorjeta-total > strong").innerHTML = "R$ 0.00"
+    document.querySelector(".total > strong").innerHTML = "R% 0.00"
+}
