@@ -40,5 +40,13 @@ function receberPorcentagemBotao(evento) {
         }
     })
 
-    porcetagem = parseFloat(evento.target.value) / 100
+    if(evento.target.value !== "") {
+        porcetagem = parseFloat(evento.target.value) / 100
+    } else {
+        porcetagem = 0
+    }
+    console.log(porcetagem)
 }
+
+const gorjetaInput = document.querySelector("#outra")
+gorjetaInput.addEventListener("input", receberPorcentagemBotao)
